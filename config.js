@@ -1,5 +1,5 @@
 const config = {
-  rotationInterval: 10000,
+  rotationInterval: 15000,
   urls: [
     'https://junalahdot.fi/tampere?command=fs&id=462&dt=dep&lang=1',
     'https://www.lounaat.info/lounas/linkosuo-min-asemakeskus/tampere',
