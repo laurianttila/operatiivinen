@@ -8,13 +8,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Vanta.js Background Layer -->
+  <div id="vanta-bg"></div>
+
   <!-- Content Container -->
   <div id="content-container">
     <!-- Header Bar -->
     <header id="header-bar">
       <div id="header-content">
         <div id="header-title">Operatiivinen infonäyttö</div>
-        <div id="current-time"></div>
+        <div id="header-info">
+          <div id="current-time"></div>
+          <div id="progress-indicator"></div>
+        </div>
       </div>
     </header>
 
@@ -22,8 +28,10 @@
     <iframe id="content-frame" src="" frameborder="0"></iframe>
   </div>
 
-  <!-- Vanta.js Background Overlay -->
-  <div id="vanta-bg"></div>
+  <!-- Progress Bar Container -->
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
 
   <!-- Include the configuration and script files -->
   <script src="config.js"></script>

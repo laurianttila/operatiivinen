@@ -1,15 +1,38 @@
 /* script.js */
 
 let currentIndex = parseInt(localStorage.getItem('currentIndex')) || 0;
+let rotationIntervalId;
+let progressIntervalId;
+let rotationDuration = config.rotationInterval; // in milliseconds
+let progressStartTime;
 
+// Function to rotate content
 function rotateContent() {
   const iframe = document.getElementById('content-frame');
-  iframe.src = config.urls[currentIndex];
+  const urls = config.urls;
+  const url = urls[currentIndex];
 
-  currentIndex = (currentIndex + 1) % config.urls.length;
+  // Update the progress indicator
+  updateProgressIndicator(currentIndex, urls.length);
+
+  iframe.style.display = 'block';
+  iframe.src = url;
+
+  currentIndex = (currentIndex + 1) % urls.length;
   localStorage.setItem('currentIndex', currentIndex);
+
+  // Restart progress bar
+  resetProgressBar();
 }
 
+// Function to update the progress indicator text
+function updateProgressIndicator(index, total) {
+  const progressIndicator = document.getElementById('progress-indicator');
+  const currentItem = index + 1; // Convert zero-based index to one-based
+  progressIndicator.textContent = `Näkymä ${currentItem} / ${total}`;
+}
+
+// Function to update the time display
 function updateTime() {
   const timeElement = document.getElementById('current-time');
   const now = new Date();
@@ -24,15 +47,14 @@ function updateTime() {
   minutes = minutes < 10 ? '0' + minutes : minutes;
   seconds = seconds < 10 ? '0' + seconds : seconds;
 
-  // Construct the military time string
-  const militaryTime = `${hours}:${minutes}:${seconds}`;
+  // Construct the military time string with seconds in a span
+  const militaryTime = `${hours}${minutes}<span class="seconds">${seconds}</span>`;
 
-  timeElement.textContent = militaryTime;
+  // Update the time element's HTML
+  timeElement.innerHTML = militaryTime;
 }
 
-// Initialize Vanta.js effect
-let vantaEffect;
-
+// Function to initialize the Vanta.js effect
 function initVanta() {
   vantaEffect = VANTA.NET({
     el: "#vanta-bg",
@@ -46,25 +68,50 @@ function initVanta() {
     points: 20.00,
     maxDistance: 25.00,
     spacing: 15.00,
-    color: 0x687656,       // Line color matching lime green
+    color: 0x687656,            // Line color matching lime green
     backgroundColor: 0x0C241F, // Background color matching teal green
   });
 }
 
-window.onload = () => {
+// Function to start the progress bar animation
+function startProgressBar() {
+  const progressBar = document.getElementById('progress-bar');
+  progressBar.style.transition = 'none';
+  progressBar.style.width = '0%';
+
+  // Force reflow to apply the width reset
+  void progressBar.offsetWidth;
+
+  // Start the transition
+  progressBar.style.transition = `width ${rotationDuration}ms linear`;
+  progressBar.style.width = '100%';
+}
+
+// Function to reset the progress bar
+function resetProgressBar() {
+  startProgressBar();
+}
+
+// Initialize Vanta.js effect and start content rotation and progress bar
+function initialize() {
   rotateContent();
-  setInterval(rotateContent, config.rotationInterval);
+  rotationIntervalId = setInterval(rotateContent, rotationDuration);
 
   updateTime();
   setInterval(updateTime, 1000);
 
   initVanta();
 
-  // Automatically refresh the page every 60 seconds
+  // Initialize the progress bar
+  startProgressBar();
+
+  // Automatically refresh the page every 180 seconds (3 minutes)
   setInterval(() => {
     location.reload();
-  }, 180000); 
-};
+  }, 180000); // 180000 milliseconds = 3 minutes
+}
+
+window.onload = initialize;
 
 // Clean up Vanta.js on window unload
 window.onbeforeunload = () => {

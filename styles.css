@@ -20,6 +20,8 @@ body {
 
 #content-container {
   position: relative;
+  width: 100vw; /* Ensure full viewport width */
+  height: 100vh; /* Ensure full viewport height */
   z-index: 2; /* Content layer above Vanta effect */
 }
 
@@ -47,9 +49,21 @@ body {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+#header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the right */
+}
+
 #current-time {
   font-size: 40px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* New Styles for Seconds */
+.seconds {
+  font-size: 0.6em; /* 60% of the parent font size */
+  vertical-align: super; /* Superscript */
 }
 
 #content-frame {
@@ -67,4 +81,23 @@ body {
   left: 0;
   width: 100% !important;
   height: 100% !important;
+}
+
+/* Progress Bar Container */
+#progress-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px; /* Thickness of the progress bar */
+  background-color: rgba(255, 255, 255, 0.1); /* Light background for the container */
+  z-index: 4; /* Above other content */
+}
+
+/* Progress Bar */
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #4caf50; /* Green color for the progress */
+  transition: width linear;
 }
