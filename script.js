@@ -1,10 +1,13 @@
-let currentIndex = 0;
+/* script.js */
+
+let currentIndex = parseInt(localStorage.getItem('currentIndex')) || 0;
 
 function rotateContent() {
   const iframe = document.getElementById('content-frame');
   iframe.src = config.urls[currentIndex];
 
   currentIndex = (currentIndex + 1) % config.urls.length;
+  localStorage.setItem('currentIndex', currentIndex);
 }
 
 function updateTime() {
@@ -23,22 +26,20 @@ function updateTime() {
 let vantaEffect;
 
 function initVanta() {
-  vantaEffect = VANTA.TOPOLOGY({
-    el: "#header-bar",
-    color: 0x89964e,        // Line color matching lime green
-    backgroundColor: 0x2222, // Background color matching teal green
+  vantaEffect = VANTA.NET({
+    el: "#vanta-bg",
     mouseControls: true,
     touchControls: true,
     gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
+    minHeight: 0.00,
+    minWidth: 0.00,
     scale: 1.00,
     scaleMobile: 1.00,
-    // Additional customization options
-    points: 15.0,           // Number of points
-    spacing: 20.0,          // Spacing between points
-    showDots: true,         // Display dots at points
-    showLines: true,        // Display lines between points
+    points: 14.00,
+    maxDistance: 22.00,
+    spacing: 18.00,
+    color: 0x89964e,       // Line color matching lime green
+    backgroundColor: 0x002222, // Background color matching teal green
   });
 }
 
@@ -50,14 +51,21 @@ window.onload = () => {
   setInterval(updateTime, 1000);
 
   initVanta();
+
+  // Automatically refresh the page every 60 seconds
+  setInterval(() => {
+    location.reload();
+  }, 60000); // 60000 milliseconds = 60 seconds
 };
 
 // Clean up Vanta.js on window unload
-window.onunload = () => {
+window.onbeforeunload = () => {
   if (vantaEffect) vantaEffect.destroy();
 };
 
-// Automatically refresh the page every 60 seconds
-setInterval(() => {
-  location.reload();
-}, 60000); 
+// Handle window resize
+window.addEventListener('resize', () => {
+  if (vantaEffect) {
+    vantaEffect.resize();
+  }
+});
