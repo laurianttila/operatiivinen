@@ -13,13 +13,21 @@ function rotateContent() {
 function updateTime() {
   const timeElement = document.getElementById('current-time');
   const now = new Date();
-  const options = {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  };
-  timeElement.textContent = now.toLocaleTimeString([], options);
+
+  // Get hours, minutes, and seconds
+  let hours = now.getHours(); // 0-23
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+
+  // Pad with leading zeros if needed
+  hours = hours < 10 ? '0' + hours : hours;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+
+  // Construct the military time string
+  const militaryTime = `${hours}:${minutes}:${seconds}`;
+
+  timeElement.textContent = militaryTime;
 }
 
 // Initialize Vanta.js effect
@@ -35,11 +43,11 @@ function initVanta() {
     minWidth: 0.00,
     scale: 1.00,
     scaleMobile: 1.00,
-    points: 14.00,
-    maxDistance: 22.00,
-    spacing: 18.00,
-    color: 0x89964e,       // Line color matching lime green
-    backgroundColor: 0x002222, // Background color matching teal green
+    points: 20.00,
+    maxDistance: 25.00,
+    spacing: 15.00,
+    color: 0x687656,       // Line color matching lime green
+    backgroundColor: 0x0C241F, // Background color matching teal green
   });
 }
 
