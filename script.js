@@ -63,7 +63,7 @@ window.onload = () => {
   // Automatically refresh the page every 60 seconds
   setInterval(() => {
     location.reload();
-  }, 60000); // 60000 milliseconds = 60 seconds
+  }, 180000); 
 };
 
 // Clean up Vanta.js on window unload
