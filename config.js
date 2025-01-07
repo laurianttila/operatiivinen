@@ -4,7 +4,7 @@ const config = {
     'https://junalahdot.fi/tampere?command=fs&id=462&dt=dep&lang=1',
     'https://www.lounaat.info/lounas/linkosuo-min-asemakeskus/tampere',
     'https://www.lounaat.info/lounas/aitoleipa-tammela-go21/tampere',
-    'https://tremonitori.digitransit.fi/view?cont=2JsJVN1zxoEJmcj8q9jnYQ==',
+    'https://tremonitori.digitransit.fi/view?cont=oQa6fjvRemCsFgclflvySw==',
     'https://embed.waze.com/iframe?zoom=14&lat=61.485267&lon=23.768063&ct=livemap'
   ]
 };
